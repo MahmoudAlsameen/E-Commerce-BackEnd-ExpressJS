@@ -1,16 +1,11 @@
 import express from "express";
-import { addMessage, getMessages } from "../controllers/product.controller.js";
+import Joi from "joi";
 import auth from "../middleware/auth.js";
 import validation from "../middleware/validation.js";
-import messageValidationSchema from "../validation/message.validation.js";
-const messageRoutes = express.Router();
+const productRoutes = express.Router();
 
-messageRoutes.post(
-  "/",
-  validation(messageValidationSchema, "body"),
-  addMessage
-);
+productRoutes.post("/", validation(Joi.object(), "body"), () => {});
 
-messageRoutes.get("/", auth, getMessages);
+productRoutes.get("/", auth, () => {});
 
-export default messageRoutes;
+export default productRoutes;

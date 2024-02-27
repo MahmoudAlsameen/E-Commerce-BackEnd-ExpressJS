@@ -20,13 +20,16 @@ export const load_env = function () {
         ...result,
       };
       break;
-    default:
+    case "dev":
       configPath = "config/.env.dev";
       result = dotenv.config({ path: configPath });
       process.env = {
         ...process.env,
         ...result,
       };
+      break;
+    default:
+      dotenv.config();
       break;
   }
 };

@@ -25,12 +25,12 @@ const userSchema = new mongoose.Schema(
       minlength: [3, "Name must be at least 3 characters long"],
     },
     cart: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Cart",
     },
     orders: [
       {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Order",
       },
     ],
