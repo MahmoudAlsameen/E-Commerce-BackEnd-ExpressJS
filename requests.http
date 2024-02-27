@@ -1,0 +1,12 @@
+### (local) List all users
+GET http://127.0.0.1:3000/users
+
+
+### (local) List all products
+GET http://127.0.0.1:3000/products
+
+### (local) List all orders
+GET http://127.0.0.1:3000/orders
+
+### (local) List all carts
+GET http://127.0.0.1:3000/carts
