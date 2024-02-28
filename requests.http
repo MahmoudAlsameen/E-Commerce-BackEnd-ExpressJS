@@ -10,6 +10,43 @@ Content-Type: application/json
   "password": "Password123!"
 }
 
+### Login user
+POST http://127.0.0.1:3000/api/user/login
+Content-Type: application/json
+
+{
+  "email": "example@example.com",
+  "password": "Password123!1235z"
+}
+
+### Update user
+PATCH  http://127.0.0.1:3000/api/user/65dec14f176f6872196732bf
+Content-Type: application/json
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZGVjMTRmMTc2ZjY4NzIxOTY3MzJiZiIsImlhdCI6MTcwOTA5NzMwNX0.28M6mS8vNoPMEAkswysYgjT5wDztK2Q12v-Ib87rBQE
+
+{
+  "email": "example@example1z2z.com",
+  "fullName": "shazam"
+}
+
+### Update user password
+PATCH  http://127.0.0.1:3000/api/user/password/65dec14f176f6872196732bf
+Content-Type: application/json
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZGVjMTRmMTc2ZjY4NzIxOTY3MzJiZiIsImlhdCI6MTcwOTA5NzMwNX0.28M6mS8vNoPMEAkswysYgjT5wDztK2Q12v-Ib87rBQE
+
+{
+  "oldPassword": "Password123!",
+  "newPassword": "Password123!1235z"
+}
+
+### Delete user
+DELETE   http://127.0.0.1:3000/api/user/65dec14f176f6872196732bf
+Content-Type: application/json
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZGVjMTRmMTc2ZjY4NzIxOTY3MzJiZiIsImlhdCI6MTcwOTA5NzMwNX0.28M6mS8vNoPMEAkswysYgjT5wDztK2Q12v-Ib87rBQE
+
+{
+  "password": "Password123!1235z"
+}
 
 ### List all products
 GET http://127.0.0.1:3000/products
