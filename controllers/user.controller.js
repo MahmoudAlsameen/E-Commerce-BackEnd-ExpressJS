@@ -40,13 +40,21 @@ const userLogin = catchAsync(async (req, res, next) => {
   }
 });
 
-const userUpdate = async (req, res) => {
-  try {
-    const userId = req.userId;
-    let user = await userModel.findById(userId);
+const userUpdate = catchAsync(async (req, res, next) => {
+  const headersUserId = req.userId;
+  const paramUserId = req.params.id;
+  if (headersUserId != paramUserId) {
+    next(
+      new AppError(
+        "User is not authorized to update the user in the param",
+        401
+      )
+    );
+  } else {
+    let user = await userModel.findById(headersUserId);
     if (user) {
       const updatedUser = await userModel.findByIdAndUpdate(
-        userId,
+        headersUserId,
         { ...req.body },
         { new: true }
       );
@@ -56,24 +64,30 @@ const userUpdate = async (req, res) => {
     } else {
       res.status(404).json({ message: "User not found" });
     }
-  } catch (error) {
-    res.status(500).json({ message: "Internal server error", error });
   }
-};
+});
 
-const userChangePassword = async (req, res) => {
-  try {
-    const userId = req.userId;
-    const user = await userModel.findById(userId);
+const userChangePassword = catchAsync(async (req, res, next) => {
+  const headersUserId = req.userId;
+  const paramUserId = req.params.id;
+  if (headersUserId != paramUserId) {
+    next(
+      new AppError(
+        "User is not authorized to update the user in the param",
+        401
+      )
+    );
+  } else {
+    const user = await userModel.findById(headersUserId);
     if (user) {
       const oldPassword = req.body.oldPassword;
-      const isMatched = bcrypt.compareSync(req.body.oldPassword, user.password);
+      const isMatched = bcrypt.compareSync(oldPassword, user.password);
       if (isMatched) {
         const newHashedPassword = bcrypt.hashSync(
           req.body.newPassword,
-          saltRounds
+          parseInt(process.env.SALT_ROUNDS)
         );
-        const updatedUser = await userModel.findByIdAndUpdate(userId, {
+        const updatedUser = await userModel.findByIdAndUpdate(headersUserId, {
           password: newHashedPassword,
         });
         res.status(200).json({ message: "Password updated successfully" });
@@ -83,19 +97,25 @@ const userChangePassword = async (req, res) => {
     } else {
       res.status(404).json({ message: "User not found" });
     }
-  } catch (error) {
-    res.status(500).json({ message: "Internal server error", error });
   }
-};
+});
 
 const userDelete = async (req, res) => {
-  try {
-    const userId = req.userId;
-    const user = await userModel.findById(userId);
+  const headersUserId = req.userId;
+  const paramUserId = req.params.id;
+  if (headersUserId != paramUserId) {
+    next(
+      new AppError(
+        "User is not authorized to delete the user in the param",
+        401
+      )
+    );
+  } else {
+    const user = await userModel.findById(headersUserId);
     if (user) {
       const isMatched = bcrypt.compareSync(req.body.password, user.password);
       if (isMatched) {
-        const deletedUser = await userModel.findByIdAndDelete(userId);
+        const deletedUser = await userModel.findByIdAndDelete(headersUserId);
         res.status(200).json({ message: "User deleted successfully" });
       } else {
         res.status(401).json({ message: "Invalid password" });
@@ -103,8 +123,6 @@ const userDelete = async (req, res) => {
     } else {
       res.status(404).json({ message: "User not found" });
     }
-  } catch (error) {
-    res.status(500).json({ message: "Internal server error", error });
   }
 };
 

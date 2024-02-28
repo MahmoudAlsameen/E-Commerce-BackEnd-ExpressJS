@@ -43,15 +43,6 @@ const userUpdateValidationSchema = Joi.object({
   email: Joi.string()
     .email()
     .pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{1,}$/),
-  password: Joi.string()
-    .pattern(
-      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]).{8,}$/
-    )
-    .messages({
-      "string.pattern.base":
-        "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character",
-      "string.empty": "Password is required",
-    }),
   fullName: Joi.string().min(3).optional(),
   cart: Joi.string().allow(null).optional(), // Assuming cart can be null or omitted
   orders: Joi.array().items(Joi.string()).optional(), // Assuming orders is an array of strings
