@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import cartModel from "../db/models/cart.model.js";
 import userModel from "../db/models/user.model.js";
 import AppError from "./../utils/appError.js";
 import catchAsync from "./../utils/catchAsync.js";
@@ -116,6 +117,7 @@ const userDelete = async (req, res) => {
       const isMatched = bcrypt.compareSync(req.body.password, user.password);
       if (isMatched) {
         const deletedUser = await userModel.findByIdAndDelete(headersUserId);
+        const deletedCart = await cartModel.findOne({ userId: headersUserId });
         res.status(200).json({ message: "User deleted successfully" });
       } else {
         res.status(401).json({ message: "Invalid password" });
