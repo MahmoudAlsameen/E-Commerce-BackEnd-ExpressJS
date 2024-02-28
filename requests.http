@@ -1,12 +1,21 @@
-### (local) List all users
-GET http://127.0.0.1:3000/users
+### List all users
+GET http://127.0.0.1:3000/api/user/allUsers
+
+### Register user
+POST http://127.0.0.1:3000/api/user/register
+Content-Type: application/json
+
+{
+  "email": "example@example.com",
+  "password": "Password123!"
+}
 
 
-### (local) List all products
+### List all products
 GET http://127.0.0.1:3000/products
 
-### (local) List all orders
+### List all orders
 GET http://127.0.0.1:3000/orders
 
-### (local) List all carts
+### List all carts
 GET http://127.0.0.1:3000/carts

@@ -4,6 +4,11 @@ import userModel from "../db/models/user.model.js";
 import AppError from "./../utils/appError.js";
 import catchAsync from "./../utils/catchAsync.js";
 
+const getAllUsers = catchAsync(async (req, res, next) => {
+  const allUsers = await userModel.find();
+  res.status(201).json({ message: "Users founded", allUsers });
+});
+
 const userRegister = catchAsync(async (req, res, next) => {
   const hashedPassword = bcrypt.hashSync(
     req.body.password,
@@ -35,4 +40,79 @@ const userLogin = catchAsync(async (req, res, next) => {
   }
 });
 
-export { userLogin, userRegister };
+const userUpdate = async (req, res) => {
+  try {
+    const userId = req.userId;
+    let user = await userModel.findById(userId);
+    if (user) {
+      const updatedUser = await userModel.findByIdAndUpdate(
+        userId,
+        { ...req.body },
+        { new: true }
+      );
+      res
+        .status(200)
+        .json({ message: "User updated successfully", updatedUser });
+    } else {
+      res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error", error });
+  }
+};
+
+const userChangePassword = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const user = await userModel.findById(userId);
+    if (user) {
+      const oldPassword = req.body.oldPassword;
+      const isMatched = bcrypt.compareSync(req.body.oldPassword, user.password);
+      if (isMatched) {
+        const newHashedPassword = bcrypt.hashSync(
+          req.body.newPassword,
+          saltRounds
+        );
+        const updatedUser = await userModel.findByIdAndUpdate(userId, {
+          password: newHashedPassword,
+        });
+        res.status(200).json({ message: "Password updated successfully" });
+      } else {
+        res.status(401).json({ message: "Invalid oldPassword" });
+      }
+    } else {
+      res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error", error });
+  }
+};
+
+const userDelete = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const user = await userModel.findById(userId);
+    if (user) {
+      const isMatched = bcrypt.compareSync(req.body.password, user.password);
+      if (isMatched) {
+        const deletedUser = await userModel.findByIdAndDelete(userId);
+        res.status(200).json({ message: "User deleted successfully" });
+      } else {
+        res.status(401).json({ message: "Invalid password" });
+      }
+    } else {
+      res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error", error });
+  }
+};
+
+export {
+  getAllUsers,
+  userChangePassword,
+  userDelete,
+  userLogin,
+  userRegister,
+  userUpdate,
+};
