@@ -9,16 +9,15 @@ import AppError from "./utils/appError.js";
 import { load_env } from "./utils/load.env.js";
 
 load_env();
-const envMorganLogging = process.env.MORGAN_LOGGING;
 const app = express();
 
 app.use(cors());
 app.use(express.json());
 
 // Morgan logging
-if (envMorganLogging) {
-  app.use(morgan(envMorganLogging));
-  console.log(`Morgan_Logging mode: ${envMorganLogging}`);
+if (process.env.MORGAN_LOGGING) {
+  app.use(morgan(process.env.MORGAN_LOGGING));
+  console.log(`Morgan_Logging mode: ${process.env.MORGAN_LOGGING}`);
 }
 
 app.use("/api/user", userRoutes);
