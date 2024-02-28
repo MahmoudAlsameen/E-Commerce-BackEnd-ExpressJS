@@ -1,12 +1,52 @@
 import Joi from "joi";
 
-const userRegisterSchema = Joi.object({
-  email: Joi.string().email().required(),
+const userRegisterValidationSchema = Joi.object({
+  email: Joi.string()
+    .email()
+    .pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{1,}$/)
+    .required(),
   password: Joi.string()
     .pattern(
       /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]).{8,}$/
     )
     .required()
+    .messages({
+      "string.pattern.base":
+        "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character",
+      "string.empty": "Password is required",
+    }),
+  fullName: Joi.string().min(3).optional(),
+  phoneNumber: Joi.string(),
+  address: Joi.string(),
+  cart: Joi.string().allow(null).optional(), // Assuming cart can be null or omitted
+  orders: Joi.array().items(Joi.string()).optional(), // Assuming orders is an array of strings
+});
+
+const userLoginValidationSchema = Joi.object({
+  email: Joi.string()
+    .email()
+    .pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{1,}$/)
+    .required(),
+  password: Joi.string()
+    .pattern(
+      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]).{8,}$/
+    )
+    .required()
+    .messages({
+      "string.pattern.base":
+        "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character",
+      "string.empty": "Password is required",
+    }),
+});
+
+const userUpdateValidationSchema = Joi.object({
+  email: Joi.string()
+    .email()
+    .pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{1,}$/),
+  password: Joi.string()
+    .pattern(
+      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]).{8,}$/
+    )
     .messages({
       "string.pattern.base":
         "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character",
@@ -17,8 +57,32 @@ const userRegisterSchema = Joi.object({
   orders: Joi.array().items(Joi.string()).optional(), // Assuming orders is an array of strings
 });
 
-const userLoginSchema = Joi.object({
-  email: Joi.string().email().required(),
+// User Change Password validation schema
+const userChangePasswordValidationSchema = Joi.object({
+  oldPassword: Joi.string()
+    .pattern(
+      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]).{8,}$/
+    )
+    .required()
+    .messages({
+      "string.pattern.base":
+        "Old password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character",
+      "string.empty": "Password is required",
+    }),
+  newPassword: Joi.string()
+    .pattern(
+      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]).{8,}$/
+    )
+    .required()
+    .messages({
+      "string.pattern.base":
+        "New Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character",
+      "string.empty": "Password is required",
+    }),
+});
+
+// User Delete validation schema
+const userDeleteValidationSchema = Joi.object({
   password: Joi.string()
     .pattern(
       /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]).{8,}$/
@@ -29,8 +93,11 @@ const userLoginSchema = Joi.object({
         "Password must contain at least one uppercase letter, one lowercase letter, one digit, and one special character",
       "string.empty": "Password is required",
     }),
-  fullName: Joi.string().min(3).optional(),
-  cart: Joi.string().allow(null).optional(), // Assuming cart can be null or omitted
-  orders: Joi.array().items(Joi.string()).optional(), // Assuming orders is an array of strings
 });
-export { userLoginSchema, userRegisterSchema };
+export {
+  userChangePasswordValidationSchema,
+  userDeleteValidationSchema,
+  userLoginValidationSchema,
+  userRegisterValidationSchema,
+  userUpdateValidationSchema,
+};

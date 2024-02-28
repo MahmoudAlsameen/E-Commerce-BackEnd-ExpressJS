@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import cartModel from "./cart.model.js";
 const userSchema = new mongoose.Schema(
   {
     email: {
@@ -22,7 +22,24 @@ const userSchema = new mongoose.Schema(
     },
     fullName: {
       type: String,
-      minlength: [3, "Name must be at least 3 characters long"],
+      validate: [
+        {
+          validator: function (v) {
+            // Check if the field has been initialized and if it meets the minimum length requirement
+            return this.isNew || v.length >= 3;
+          },
+          message: "Name must be at least 3 characters long",
+        },
+      ],
+      default: "",
+    },
+    phoneNumber: {
+      type: String,
+      default: "", // Default to empty string
+    },
+    address: {
+      type: String,
+      default: "", // Default to empty string
     },
     cart: {
       type: mongoose.Schema.Types.ObjectId,
@@ -39,6 +56,20 @@ const userSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+userSchema.pre("save", async function (next) {
+  if (!this.cart) {
+    try {
+      const newCart = await cartModel.create({ userId: this._id });
+      this.cart = newCart._id;
+      next();
+    } catch (error) {
+      next(error);
+    }
+  } else {
+    next();
+  }
+});
 
 const userModel = mongoose.model("User", userSchema);
 export default userModel;
