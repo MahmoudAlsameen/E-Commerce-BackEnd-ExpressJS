@@ -2,9 +2,11 @@ import cors from "cors";
 import express from "express";
 import morgan from "morgan";
 
+import connection from "./db/connection.js";
 import globalErrorHandler from "./middleware/errorMiddleware.js";
 import productRoutes from "./routes/productRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import { createDefaultAdmin } from "./services/adminService.js";
 import AppError from "./utils/appError.js";
 import { load_env } from "./utils/load.env.js";
 
@@ -28,4 +30,7 @@ app.all("*", (req, res, next) => {
 });
 
 app.use(globalErrorHandler);
+
+connection();
+createDefaultAdmin();
 export default app;

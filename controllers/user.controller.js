@@ -7,7 +7,7 @@ import catchAsync from "./../utils/catchAsync.js";
 
 const getAllUsers = catchAsync(async (req, res, next) => {
   const allUsers = await userModel.find();
-  res.status(201).json({ message: "Users founded", allUsers });
+  res.status(201).json({ message: "Users found", allUsers });
 });
 
 const userRegister = catchAsync(async (req, res, next) => {
