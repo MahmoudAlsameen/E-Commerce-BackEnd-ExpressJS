@@ -19,7 +19,7 @@ const productSchema = new mongoose.Schema(
       required: true,
     },
     image: {
-      type: String, // Assuming you store the URL of the product image
+      type: [String], // Array of strings (URLs of product images)
     },
     rating: {
       type: Number,
