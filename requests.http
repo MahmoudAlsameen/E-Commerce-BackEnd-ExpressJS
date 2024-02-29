@@ -10,13 +10,22 @@ Content-Type: application/json
   "password": "Password123!"
 }
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
 ### Login user
 POST http://127.0.0.1:3000/api/user/login
 Content-Type: application/json
 
 {
   "email": "example@example.com",
+<<<<<<< Updated upstream
   "password": "Password123!1235z"
+=======
+  "password": "Password123!"
+>>>>>>> Stashed changes
 }
 
 ### Update user
@@ -47,6 +56,10 @@ token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZGVjMTRmMTc2ZjY4NzIxOTY3
 {
   "password": "Password123!1235z"
 }
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
 ### List all products
 GET http://127.0.0.1:3000/products
