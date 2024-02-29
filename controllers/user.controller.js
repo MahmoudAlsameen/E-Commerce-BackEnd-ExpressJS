@@ -63,7 +63,7 @@ const userUpdate = catchAsync(async (req, res, next) => {
         .status(200)
         .json({ message: "User updated successfully", updatedUser });
     } else {
-      res.status(404).json({ message: "User not found" });
+      next(new AppError("User not found", 404));
     }
   }
 });
@@ -82,21 +82,26 @@ const userChangePassword = catchAsync(async (req, res, next) => {
     const user = await userModel.findById(headersUserId);
     if (user) {
       const oldPassword = req.body.oldPassword;
+      const newPassword = req.body.newPassword;
       const isMatched = bcrypt.compareSync(oldPassword, user.password);
       if (isMatched) {
-        const newHashedPassword = bcrypt.hashSync(
-          req.body.newPassword,
-          parseInt(process.env.SALT_ROUNDS)
-        );
-        const updatedUser = await userModel.findByIdAndUpdate(headersUserId, {
-          password: newHashedPassword,
-        });
-        res.status(200).json({ message: "Password updated successfully" });
+        if (oldPassword === newPassword) {
+          next(new AppError("oldPassword is the same as newPassword", 400));
+        } else {
+          const newHashedPassword = bcrypt.hashSync(
+            newPassword,
+            parseInt(process.env.SALT_ROUNDS)
+          );
+          const updatedUser = await userModel.findByIdAndUpdate(headersUserId, {
+            password: newHashedPassword,
+          });
+          res.status(200).json({ message: "Password updated successfully" });
+        }
       } else {
-        res.status(401).json({ message: "Invalid oldPassword" });
+        next(new AppError("Invalid oldPassword", 401));
       }
     } else {
-      res.status(404).json({ message: "User not found" });
+      next(new AppError("User not found", 404));
     }
   }
 });
@@ -120,10 +125,10 @@ const userDelete = async (req, res) => {
         const deletedCart = await cartModel.findOne({ userId: headersUserId });
         res.status(200).json({ message: "User deleted successfully" });
       } else {
-        res.status(401).json({ message: "Invalid password" });
+        next(new AppError("Invalid password", 401));
       }
     } else {
-      res.status(404).json({ message: "User not found" });
+      next(new AppError("User not found", 404));
     }
   }
 };
