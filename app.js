@@ -4,6 +4,7 @@ import morgan from "morgan";
 
 import connection from "./db/connection.js";
 import globalErrorHandler from "./middleware/errorMiddleware.js";
+import adminRoutes from "./routes/adminRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import { createDefaultAdmin } from "./services/adminService.js";
@@ -23,6 +24,7 @@ if (process.env.MORGAN_LOGGING) {
 }
 
 app.use("/api/user", userRoutes);
+app.use("/api/admin", adminRoutes);
 app.use("/api/products", productRoutes);
 
 app.all("*", (req, res, next) => {
