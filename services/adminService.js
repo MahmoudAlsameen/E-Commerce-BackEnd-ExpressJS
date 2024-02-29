@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
+import adminModel from "../db/models/admin.model.js";
 const createDefaultAdmin = async () => {
-  const managerCount = await adminModel.countDocuments();
+  const adminCount = await adminModel.countDocuments();
 
   if (adminCount === 0) {
     const hashedPassword = bcrypt.hashSync(
