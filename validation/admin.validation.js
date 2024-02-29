@@ -1,6 +1,6 @@
 import Joi from "joi";
 
-const userRegisterValidationSchema = Joi.object({
+const adminRegisterValidationSchema = Joi.object({
   email: Joi.string()
     .email()
     .pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{1,}$/)
@@ -18,11 +18,9 @@ const userRegisterValidationSchema = Joi.object({
   fullName: Joi.string().min(3).optional(),
   phoneNumber: Joi.string(),
   address: Joi.string(),
-  cart: Joi.string().allow(null).optional(), // Assuming cart can be null or omitted
-  orders: Joi.array().items(Joi.string()).optional(), // Assuming orders is an array of strings
 });
 
-const userLoginValidationSchema = Joi.object({
+const adminLoginValidationSchema = Joi.object({
   email: Joi.string()
     .email()
     .pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{1,}$/)
@@ -39,19 +37,17 @@ const userLoginValidationSchema = Joi.object({
     }),
 });
 
-const userUpdateValidationSchema = Joi.object({
+const adminUpdateValidationSchema = Joi.object({
   email: Joi.string()
     .email()
     .pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{1,}$/),
   fullName: Joi.string().min(3).optional(),
   phoneNumber: Joi.string(),
   address: Joi.string(),
-  cart: Joi.string().allow(null).optional(), // Assuming cart can be null or omitted
-  orders: Joi.array().items(Joi.string()).optional(), // Assuming orders is an array of strings
 });
 
 // User Change Password validation schema
-const userChangePasswordValidationSchema = Joi.object({
+const adminChangePasswordValidationSchema = Joi.object({
   oldPassword: Joi.string()
     .pattern(
       /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]).{8,}$/
@@ -75,7 +71,7 @@ const userChangePasswordValidationSchema = Joi.object({
 });
 
 // User Delete validation schema
-const userDeleteValidationSchema = Joi.object({
+const adminDeleteValidationSchema = Joi.object({
   password: Joi.string()
     .pattern(
       /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]).{8,}$/
@@ -88,9 +84,9 @@ const userDeleteValidationSchema = Joi.object({
     }),
 });
 export {
-  userChangePasswordValidationSchema,
-  userDeleteValidationSchema,
-  userLoginValidationSchema,
-  userRegisterValidationSchema,
-  userUpdateValidationSchema,
+  adminChangePasswordValidationSchema,
+  adminDeleteValidationSchema,
+  adminLoginValidationSchema,
+  adminRegisterValidationSchema,
+  adminUpdateValidationSchema,
 };
