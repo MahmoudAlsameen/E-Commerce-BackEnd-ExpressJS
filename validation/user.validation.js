@@ -44,6 +44,8 @@ const userUpdateValidationSchema = Joi.object({
     .email()
     .pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{1,}$/),
   fullName: Joi.string().min(3).optional(),
+  phoneNumber: Joi.string(),
+  address: Joi.string(),
   cart: Joi.string().allow(null).optional(), // Assuming cart can be null or omitted
   orders: Joi.array().items(Joi.string()).optional(), // Assuming orders is an array of strings
 });
