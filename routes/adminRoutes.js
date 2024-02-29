@@ -9,12 +9,12 @@ import {
 } from "../controllers/admin.controller.js";
 const adminRoutes = express.Router();
 
-userRoutes.get("/allAdmin", getAllAdmins);
+adminRoutes.get("/allAdmin", getAllAdmins);
 
-userRoutes.post("/register", adminRegister);
-userRoutes.post("/login", adminLogin);
-userRoutes.patch("/:id", adminUpdate);
-userRoutes.delete("/:id", [adminDelete]);
-userRoutes.patch("/password/:id", adminChangePassword);
+adminRoutes.post("/register", adminRegister);
+adminRoutes.post("/login", adminLogin);
+adminRoutes.patch("/:id", adminUpdate);
+adminRoutes.delete("/:id", [adminDelete]);
+adminRoutes.patch("/password/:id", adminChangePassword);
 
 export default adminRoutes;
