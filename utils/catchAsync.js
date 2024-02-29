@@ -9,6 +9,8 @@ const catchAsync = (fn) => {
           message += `${key}: ${error.keyValue[key]} Already exists. `;
         }
         return next(new AppError(message.trim(), 400));
+      } else if (error.name == "ValidationError") {
+        return next(new AppError(error.message, 400));
       }
       next(error);
     });
