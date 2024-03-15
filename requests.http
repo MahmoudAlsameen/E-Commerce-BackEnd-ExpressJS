@@ -6,26 +6,18 @@ POST http://127.0.0.1:3000/api/user/register
 Content-Type: application/json
 
 {
-  "email": "example@example.com",
+  "email": "example@example1212.com",
   "password": "Password123!"
 }
 
-<<<<<<< Updated upstream
-=======
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
 ### Login user
 POST http://127.0.0.1:3000/api/user/login
 Content-Type: application/json
 
 {
-  "email": "example@example.com",
-<<<<<<< Updated upstream
-  "password": "Password123!1235z"
-=======
+  "email": "example@example1212.com",
   "password": "Password123!"
->>>>>>> Stashed changes
+
 }
 
 ### Update user
@@ -56,10 +48,114 @@ token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZGVjMTRmMTc2ZjY4NzIxOTY3
 {
   "password": "Password123!1235z"
 }
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
->>>>>>> Stashed changes
+
+
+### List all users
+GET https://e-commerce-backend-expressjs.onrender.com/api/user/allUsers
+
+### Register user
+POST https://e-commerce-backend-expressjs.onrender.com/api/user/register
+Content-Type: application/json
+
+{
+  "email": "example@exampleNew.com",
+  "password": "Password123!New",
+  "phoneNumber":"1234568789",
+  "address":"11 something st. Cairo, Egypt"
+}
+
+### Login user
+POST https://e-commerce-backend-expressjs.onrender.com/api/user/login
+Content-Type: application/json
+
+{
+  "email": "example@example.com",
+  "password": "Password123!"
+}
+
+### Update user
+PATCH  https://e-commerce-backend-expressjs.onrender.com/api/user/65dec14f176f6872196732bf
+Content-Type: application/json
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZGVjMTRmMTc2ZjY4NzIxOTY3MzJiZiIsImlhdCI6MTcwOTA5NzMwNX0.28M6mS8vNoPMEAkswysYgjT5wDztK2Q12v-Ib87rBQE
+
+{
+  "email": "example@exampleNew.com",
+  "phoneNumber":"1234568789",
+  "address":"11 something st. Cairo, Egypt"
+}
+
+### Update user password
+PATCH  https://e-commerce-backend-expressjs.onrender.com/api/user/password/65dec14f176f6872196732bf
+Content-Type: application/json
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZGVjMTRmMTc2ZjY4NzIxOTY3MzJiZiIsImlhdCI6MTcwOTA5NzMwNX0.28M6mS8vNoPMEAkswysYgjT5wDztK2Q12v-Ib87rBQE
+
+{
+  "oldPassword": "Password123!",
+  "newPassword": "Password123!1235z"
+}
+
+### Delete user
+DELETE   https://e-commerce-backend-expressjs.onrender.com/api/user/65dec14f176f6872196732bf
+Content-Type: application/json
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZGVjMTRmMTc2ZjY4NzIxOTY3MzJiZiIsImlhdCI6MTcwOTA5NzMwNX0.28M6mS8vNoPMEAkswysYgjT5wDztK2Q12v-Ib87rBQE
+
+{
+  "password": "Password123!1235z"
+}
+
+### List all admins
+GET https://e-commerce-backend-expressjs.onrender.com/api/admin/allAdmins
+
+### Register admin
+POST https://e-commerce-backend-expressjs.onrender.com/api/admin/register
+Content-Type: application/json
+
+{
+  "email": "example@example.com",
+  "password": "Password123!",
+  "phoneNumber":"1234568789",
+  "address":"11 something st. Cairo, Egypt"
+}
+
+### Login admin
+POST https://e-commerce-backend-expressjs.onrender.com/api/admin/login
+Content-Type: application/json
+
+{
+  "email": "example@example.com",
+  "password": "Password123!"
+}
+
+### Update admin
+PATCH  https://e-commerce-backend-expressjs.onrender.com/api/admin/65dec14f176f6872196732bf
+Content-Type: application/json
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZGVjMTRmMTc2ZjY4NzIxOTY3MzJiZiIsImlhdCI6MTcwOTA5NzMwNX0.28M6mS8vNoPMEAkswysYgjT5wDztK2Q12v-Ib87rBQE
+
+{
+  "email": "example@example1z2z.com",
+  "fullName": "shazam",
+  "phoneNumber":"105546544878",
+  "address":"37 something st. Giza, Egypt"
+}
+
+### Update admin password
+PATCH  https://e-commerce-backend-expressjs.onrender.com/api/admin/password/65dec14f176f6872196732bf
+Content-Type: application/json
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZGVjMTRmMTc2ZjY4NzIxOTY3MzJiZiIsImlhdCI6MTcwOTA5NzMwNX0.28M6mS8vNoPMEAkswysYgjT5wDztK2Q12v-Ib87rBQE
+
+{
+  "oldPassword": "Password123!",
+  "newPassword": "Password123!1235z"
+}
+
+### Delete admin
+DELETE   https://e-commerce-backend-expressjs.onrender.com/api/admin/65dec14f176f6872196732bf
+Content-Type: application/json
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZGVjMTRmMTc2ZjY4NzIxOTY3MzJiZiIsImlhdCI6MTcwOTA5NzMwNX0.28M6mS8vNoPMEAkswysYgjT5wDztK2Q12v-Ib87rBQE
+
+{
+  "password": "Password123!1235z"
+}
 
 ### List all products
 GET http://127.0.0.1:3000/products

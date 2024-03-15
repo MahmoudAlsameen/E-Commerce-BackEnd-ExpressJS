@@ -106,7 +106,7 @@ const userChangePassword = catchAsync(async (req, res, next) => {
   }
 });
 
-const userDelete = async (req, res) => {
+const userDelete = catchAsync(async (req, res) => {
   const headersUserId = req.userId;
   const paramUserId = req.params.id;
   if (headersUserId != paramUserId) {
@@ -131,7 +131,7 @@ const userDelete = async (req, res) => {
       next(new AppError("User not found", 404));
     }
   }
-};
+});
 
 export {
   getAllUsers,

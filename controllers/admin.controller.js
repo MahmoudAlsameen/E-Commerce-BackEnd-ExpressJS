@@ -108,7 +108,7 @@ const adminChangePassword = catchAsync(async (req, res, next) => {
   }
 });
 
-const adminDelete = async (req, res) => {
+const adminDelete = catchAsync(async (req, res) => {
   const headersAdminId = req.userId;
   const paramAdminId = req.params.id;
   if (headersAdminId != paramAdminId) {
@@ -132,7 +132,7 @@ const adminDelete = async (req, res) => {
       next(new AppError("Admin not found", 404));
     }
   }
-};
+});
 
 export {
   adminChangePassword,
